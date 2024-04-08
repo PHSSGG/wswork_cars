@@ -68,7 +68,7 @@ public class MarcaTest extends CarsApplicationTest {
     @Order(4)
     @DirtiesContext
     void retrieveData() throws Exception {
-        List<Marca> marcas = service.getMarcas();
+        List<Marca> marcas = service.getData();
 
         mockMvc.perform(get("/marcas"))
                 .andExpect(status().isOk())
@@ -78,8 +78,8 @@ public class MarcaTest extends CarsApplicationTest {
     @Test
     @Order(5)
     void clearDatabase() {
-        for (Marca marca : service.getMarcas()) {
-            service.deleteMarca(marca);
+        for (Marca marca : service.getData()) {
+            service.deleteData(marca);
         }
         System.out.println("db cleaned");
     }
