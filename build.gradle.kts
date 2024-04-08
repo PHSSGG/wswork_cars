@@ -12,7 +12,8 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    runtimeOnly("com.mysql:mysql-connector-j:8.3.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
