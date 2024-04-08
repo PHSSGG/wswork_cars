@@ -16,6 +16,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     runtimeOnly("com.mysql:mysql-connector-j:8.3.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("com.h2database:h2:2.2.224")
 }
 
 tasks.getByName<Test>("test") {
