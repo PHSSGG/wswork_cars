@@ -1,8 +1,8 @@
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
+import phss.wsworkcars.models.Marca;
 import phss.wsworkcars.models.Modelo;
 import phss.wsworkcars.services.ModeloService;
 
@@ -12,7 +12,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class ModelosTest extends CarsApplicationTest {
@@ -38,20 +37,15 @@ public class ModelosTest extends CarsApplicationTest {
     @Test
     @Order(2)
     void addModelo() throws Exception {
-        Modelo modelo = new Modelo(1, -1, "Modelo1", 10.0);
-
-        mockMvc.perform(post("/addModelo")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(modelo)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.nome").value("Modelo1"))
-                .andExpect(jsonPath("$.valor_fipe").value(10.0));
+        Marca marca = createMarca(new Marca(1, "Test1"));
+        createModelo(new Modelo(1, marca, "Modelo1", 10.0));
     }
 
     @Test
     @Order(3)
     void findModelo() throws Exception {
-        Modelo modelo = new Modelo(1, -1, "Modelo1", 10.0);
+        Marca marca = new Marca(1, "Test1");
+        Modelo modelo = new Modelo(1, marca, "Modelo1", 10.0);
 
         mockMvc.perform(get("/getModelo/1"))
                 .andExpect(status().isOk())
@@ -76,22 +70,29 @@ public class ModelosTest extends CarsApplicationTest {
     @Order(5)
     @DirtiesContext
     void retrieveModelosByMarca() throws Exception {
+        Marca marca1 = new Marca(1, "Marca1");
+        Marca marca2 = new Marca(2, "Marca2");
+        Marca marca3 = new Marca(3, "Marca3");
         List<Modelo> modelos = Arrays.asList(
-                new Modelo(2, 1, "Modelo2", 1.0),
-                new Modelo(3, -1, "Modelo3", 1.0),
-                new Modelo(4, 1, "Modelo4", 1.0),
-                new Modelo(5, 100, "Modelo5", 2));
+                new Modelo(2, marca1, "Modelo2", 1.0),
+                new Modelo(3, marca2, "Modelo3", 1.0),
+                new Modelo(4, marca1, "Modelo4", 1.0),
+                new Modelo(5, marca3, "Modelo5", 2));
+
         System.out.println("Adding modelos");
 
-        mockMvc.perform(post("/addModelos")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(modelos)))
-                .andExpect(status().isOk());
+        createMarca(marca1);
+        createMarca(marca2);
+        createMarca(marca3);
 
-        List<Modelo> filteredModelos = service.getData().stream().filter(modelo -> modelo.getMarcaId() == -1).toList();
+        for (Modelo modelo : modelos) {
+            createModelo(modelo);
+        }
+
+        List<Modelo> filteredModelos = service.getData().stream().filter(modelo -> modelo.getMarca().getId() == 2).toList();
         System.out.println("filtered modelos: " + filteredModelos);
 
-        mockMvc.perform(get("/getModelosByMarca/-1"))
+        mockMvc.perform(get("/getModelosByMarca/2"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(objectMapper.writeValueAsString(filteredModelos)));
     }
