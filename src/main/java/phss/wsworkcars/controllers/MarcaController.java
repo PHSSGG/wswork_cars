@@ -30,7 +30,12 @@ public class MarcaController {
     }
 
     @PostMapping("/addMarca")
-    public Marca addMarca(@RequestBody Marca marca) {
+    public Marca addMarca(@RequestParam String nome) {
+        return service.saveData(new Marca(nome));
+    }
+
+    @PostMapping("/addMarcaJson")
+    public Marca addMarcaJson(@RequestBody Marca marca) {
         return service.saveData(marca);
     }
 

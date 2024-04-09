@@ -4,17 +4,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import phss.wsworkcars.models.Carro;
+import phss.wsworkcars.models.Modelo;
 import phss.wsworkcars.services.CarroService;
+import phss.wsworkcars.services.ModeloService;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 public class CarroController {
 
     @Autowired
     private CarroService service;
+
+    @Autowired
+    private ModeloService modeloService;
 
     @GetMapping("/cars.json")
     public Map<String, List<Carro.CarroDTO>> getCarsJson() {
@@ -65,7 +72,21 @@ public class CarroController {
     }
 
     @PostMapping("/addCarro")
-    public Carro addCarro(@RequestBody Carro carro) {
+    public Carro addCarro(@RequestParam long modeloId,
+                          @RequestParam String ano,
+                          @RequestParam String combustivel,
+                          @RequestParam int numPortas,
+                          @RequestParam String cor) {
+        Modelo modelo = modeloService.getDataById(modeloId).orElse(null);
+        if (modelo == null) return null;
+
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        Carro carro = new Carro(timestamp.getTime(), modelo, ano, combustivel, numPortas, cor);
+        return service.saveData(carro);
+    }
+
+    @PostMapping("/addCarroJson")
+    public Carro addCarroJson(@RequestBody Carro carro) {
         return service.saveData(carro);
     }
 

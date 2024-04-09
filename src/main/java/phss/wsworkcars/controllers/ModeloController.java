@@ -3,7 +3,9 @@ package phss.wsworkcars.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import phss.wsworkcars.models.Marca;
 import phss.wsworkcars.models.Modelo;
+import phss.wsworkcars.services.MarcaService;
 import phss.wsworkcars.services.ModeloService;
 
 import java.util.List;
@@ -13,6 +15,9 @@ public class ModeloController {
 
     @Autowired
     private ModeloService service;
+
+    @Autowired
+    private MarcaService marcaService;
 
     @GetMapping("/modelos")
     public List<Modelo> getModelos() {
@@ -35,7 +40,15 @@ public class ModeloController {
     }
 
     @PostMapping("/addModelo")
-    public Modelo addModelo(@RequestBody Modelo modelo) {
+    public Modelo addModelo(@RequestParam long marcaId, @RequestParam String nome, @RequestParam double valor_fipe) {
+        Marca marca = marcaService.getDataById(marcaId).orElse(null);
+        if (marca == null) return null;
+
+        return service.saveData(new Modelo(marca, nome, valor_fipe));
+    }
+
+    @PostMapping("/addModeloJson")
+    public Modelo addModeloJson(@RequestBody Modelo modelo) {
         return service.saveData(modelo);
     }
 
