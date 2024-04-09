@@ -20,7 +20,7 @@ public class ModeloService extends DataService<ModeloRepository, Modelo> {
 
     public Modelo updateModelo(Modelo modelo) {
         Modelo existingModelo = getDataById(modelo.getId()).orElse(modelo);
-        existingModelo.setMarcaId(modelo.getMarcaId());
+        existingModelo.setMarca(modelo.getMarca());
         existingModelo.setNome(modelo.getNome());
         existingModelo.setValor_fipe(modelo.getValor_fipe());
 

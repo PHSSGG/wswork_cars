@@ -1,9 +1,6 @@
 package phss.wsworkcars.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "modelos")
@@ -13,22 +10,25 @@ public class Modelo {
     @GeneratedValue
     private long id;
 
-    private long marcaId;
+    @ManyToOne
+    @JoinColumn(name = "marca_id")
+    private Marca marca;
+
     private String nome;
     private double valor_fipe;
 
     public Modelo() {
     }
 
-    public Modelo(long marcaId, String nome, double valor_fipe) {
-        this.marcaId = marcaId;
+    public Modelo(Marca marca, String nome, double valor_fipe) {
+        this.marca = marca;
         this.nome = nome;
         this.valor_fipe = valor_fipe;
     }
 
-    public Modelo(long id, long marcaId, String nome, double valor_fipe) {
+    public Modelo(long id, Marca marca, String nome, double valor_fipe) {
         this.id = id;
-        this.marcaId = marcaId;
+        this.marca = marca;
         this.nome = nome;
         this.valor_fipe = valor_fipe;
     }
@@ -37,12 +37,12 @@ public class Modelo {
         return id;
     }
 
-    public long getMarcaId() {
-        return marcaId;
+    public Marca getMarca() {
+        return marca;
     }
 
-    public void setMarcaId(long marcaId) {
-        this.marcaId = marcaId;
+    public void setMarca(Marca marca) {
+        this.marca = marca;
     }
 
     public String getNome() {
