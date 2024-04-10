@@ -4,6 +4,7 @@ plugins {
     kotlin("jvm") version "1.8.10"
     id("org.springframework.boot") version "3.2.4"
     id("io.spring.dependency-management") version "1.1.4"
+    kotlin("plugin.allopen") version "1.8.10"
 }
 
 group = "phss.wsworkcars"
@@ -20,6 +21,12 @@ dependencies {
     runtimeOnly("com.mysql:mysql-connector-j:8.3.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("com.h2database:h2:2.2.224")
+}
+
+allOpen {
+    annotation("jakarta.persistence.Entity")
+    annotation("jakarta.persistence.Embeddable")
+    annotation("jakarta.persistence.MappedSuperclass")
 }
 
 tasks.getByName<Test>("test") {
