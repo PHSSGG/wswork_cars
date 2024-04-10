@@ -3,6 +3,8 @@ Projeto criado para o teste da empresa ``WS Work``
 
 Você pode encontrar informações sobre os endpoints [aqui](/API_DOCS.md)
 
+Para visualizar a versão em Java, [clique aqui](https://github.com/PHSSGG/wswork_cars)
+
 ## Pré-requisitos
 * JDK 17 instalado
 * MySQL Server instalado e configurado
