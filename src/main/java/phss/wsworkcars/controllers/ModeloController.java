@@ -62,6 +62,10 @@ public class ModeloController {
         return service.updateModelo(modelo);
     }
 
+    /**
+     * Caso o sistema encontre um modelo com o @param id informado
+     * o retorno será OK, caso contrário o retorno será NOT_FOUND.
+     */
     @DeleteMapping("/deleteModelo/{id}")
     public HttpStatus deleteModelo(@PathVariable long id) {
         Modelo result = service.deleteDataById(id);

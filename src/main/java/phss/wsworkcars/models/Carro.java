@@ -95,10 +95,18 @@ public class Carro {
         this.cor = cor;
     }
 
+    /**
+     * Método para converter o objeto carro atual em um DTO
+     * Esse método é usado para retornar a lista de carros no endpoint "/cars.json"
+     */
     public CarroDTO convertToDTO() {
         return new CarroDTO(id, timestampCadastro, modelo.getId(), ano, combustivel, numPortas, cor, modelo.getNome(), modelo.getValor_fipe());
     }
 
+    /**
+     * Inner class contendo as informações que serão mostradas
+     * no endpoint "/cars.json"
+     */
     public static class CarroDTO {
         private long id;
         private long timestamp_cadastro;

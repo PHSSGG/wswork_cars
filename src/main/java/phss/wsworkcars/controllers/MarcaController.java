@@ -49,6 +49,10 @@ public class MarcaController {
         return service.updateMarca(marca);
     }
 
+    /**
+     * Caso o sistema encontre uma marca com o @param id informado
+     * o retorno será OK, caso contrário o retorno será NOT_FOUND.
+     */
     @DeleteMapping("/deleteMarca/{id}")
     public HttpStatus deleteMarca(@PathVariable long id) {
         Marca result = service.deleteDataById(id);

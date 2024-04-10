@@ -12,7 +12,6 @@ import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 @RestController
 public class CarroController {
@@ -23,6 +22,10 @@ public class CarroController {
     @Autowired
     private ModeloService modeloService;
 
+    /**
+     * Esse método foi adicionado para suprir os requisitos passados no teste
+     * @return uma map com a key "cars" e o valor com a lista de carros.
+     */
     @GetMapping("/cars.json")
     public Map<String, List<Carro.CarroDTO>> getCarsJson() {
         Map<String, List<Carro.CarroDTO>> response = new HashMap<>();
@@ -100,6 +103,10 @@ public class CarroController {
         return service.updateCarro(carro);
     }
 
+    /**
+     * Caso o sistema encontre um carro com o @param id informado
+     * o retorno será OK, caso contrário o retorno será NOT_FOUND.
+     */
     @DeleteMapping("/deleteCarro/{id}")
     public HttpStatus deleteCarro(@PathVariable long id) {
         Carro result = service.deleteDataById(id);

@@ -6,6 +6,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Classe que servirá como base para os serviços.
+ * Essa classe já possui alguns métodos pré-feitos para
+ * prevenir códigos duplicados na aplicação
+ *
+ * @param <R> A classe de repositório do dado
+ * @param <T> O tipo do dado que esse serviço vai gerenciar
+ */
 public abstract class DataService<R extends JpaRepository<T, Long>, T> {
 
     @Autowired
