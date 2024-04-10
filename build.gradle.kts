@@ -1,5 +1,7 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
-    id("java")
+    kotlin("jvm") version "1.8.10"
     id("org.springframework.boot") version "3.2.4"
     id("io.spring.dependency-management") version "1.1.4"
 }
@@ -12,6 +14,7 @@ repositories {
 }
 
 dependencies {
+    implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     runtimeOnly("com.mysql:mysql-connector-j:8.3.0")
@@ -23,6 +26,6 @@ tasks.getByName<Test>("test") {
     useJUnitPlatform()
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
+tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "17"
 }
