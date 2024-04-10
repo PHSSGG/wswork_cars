@@ -15,9 +15,7 @@ class CarroController {
 
     @GetMapping("/cars.json")
     fun getCarsJson(): Map<String, List<Carro.CarroDTO>> {
-        val response = HashMap<String, List<Carro.CarroDTO>>()
-        response["cars"] = service.getCarrosDTOList()
-        return response
+        return hashMapOf("cars" to service.getCarrosDTOList())
     }
 
     @GetMapping("/carros")
