@@ -29,7 +29,7 @@ public class CarsApplicationTest {
     protected ObjectMapper objectMapper = new ObjectMapper();
 
     protected Marca createMarca(Marca marca) throws Exception {
-        mockMvc.perform(post("/addMarca")
+        mockMvc.perform(post("/addMarcaJson")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(marca)))
                 .andExpect(status().isOk())
@@ -39,7 +39,7 @@ public class CarsApplicationTest {
     }
 
     protected Modelo createModelo(Modelo modelo) throws Exception {
-        mockMvc.perform(post("/addModelo")
+        mockMvc.perform(post("/addModeloJson")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(modelo)))
                 .andExpect(status().isOk())
@@ -50,7 +50,7 @@ public class CarsApplicationTest {
     }
 
     protected Carro createCarro(Carro carro) throws Exception {
-        mockMvc.perform(post("/addCarro")
+        mockMvc.perform(post("/addCarroJson")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(carro)))
                 .andExpect(status().isOk())
