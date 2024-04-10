@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPat
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.web.servlet.config.annotation.EnableWebMvc
 import phss.wsworkcars.CarsApplication
+import phss.wsworkcars.models.Carro
 import phss.wsworkcars.models.Marca
 import phss.wsworkcars.models.Modelo
 
@@ -50,6 +51,20 @@ open class CarsApplicationTest {
             .andExpect(jsonPath("$.valor_fipe").value(modelo.valor_fipe))
 
         return modelo
+    }
+
+    @Throws(java.lang.Exception::class)
+    protected open fun createCarro(carro: Carro): Carro {
+        mockMvc.perform(
+            post("/addCarroJson")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(carro))
+        )
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.ano").value(carro.ano))
+            .andExpect(jsonPath("$.cor").value(carro.cor))
+
+        return carro
     }
 
 }
