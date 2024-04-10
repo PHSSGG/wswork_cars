@@ -3,6 +3,8 @@ Projeto criado para o teste da empresa ``WS Work``
 
 Você pode encontrar informações sobre os endpoints [aqui](/API_DOCS.md)
 
+Para visualizar a versão em Kotlin, [clique aqui](https://github.com/PHSSGG/wswork_cars/tree/kotlin-version)
+
 ## Pré-requisitos
 * JDK 17 instalado
 * MySQL Server instalado e configurado
